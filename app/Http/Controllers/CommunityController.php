@@ -12,11 +12,17 @@ class CommunityController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function index()
     {
-        return Inertia::render('Communities/Index');
+        $communities = Community::where('user_id', auth()->id())->paginate(5)->through(fn ($community) => [
+            'id' => $community->id,
+            'name' => $community->name,
+            'slug' => $community->slug,
+        ]);
+
+        return Inertia::render('Communities/Index', compact('communities'));
     }
 
     /**
