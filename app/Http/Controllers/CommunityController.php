@@ -62,24 +62,28 @@ class CommunityController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Community $community
+     * @return \Inertia\Response
      */
-    public function edit($id)
+    public function edit(Community $community)
     {
-        //
+        return Inertia::render('Communities/Edit',  [
+            'community' => $community
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  CommunityStoreRequest  $request
+     * @param  Community $community
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(CommunityStoreRequest $request, Community $community)
     {
-        //
+        $community->update($request->validated());
+
+        return redirect()->route('communities.index');
     }
 
     /**

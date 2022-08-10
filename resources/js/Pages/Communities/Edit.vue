@@ -6,18 +6,15 @@ import BreezeInput from '@/Components/Input.vue';
 import BreezeInputError from '@/Components/InputError.vue';
 import BreezeLabel from '@/Components/Label.vue';
 
-defineProps({
+const props = defineProps({
+    community: Object,
     errors: Object,
 })
 
-const form = useForm({
-    name: '',
-    description: '',
-    slug: '',
-});
+const form = useForm(props.community);
 
 const submit = () => {
-    form.post(route('communities.store'));
+    form.put(route('communities.update', props.community.id));
 };
 </script>
 
@@ -28,7 +25,7 @@ const submit = () => {
     <BreezeAuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Create Community
+                Edit Community
             </h2>
         </template>
 
@@ -51,7 +48,7 @@ const submit = () => {
 
                             <div class="flex items-center justify-end mt-4">
                                 <BreezeButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                                    Create
+                                    Edit
                                 </BreezeButton>
                             </div>
                         </form>

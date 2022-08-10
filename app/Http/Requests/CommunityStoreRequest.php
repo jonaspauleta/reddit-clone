@@ -26,7 +26,6 @@ class CommunityStoreRequest extends FormRequest
         return [
             'name' => 'required|min:3|unique:communities',
             'description' => 'required|min:10',
-            'slug' => 'required|min:3|unique:communities'
         ];
     }
 }
