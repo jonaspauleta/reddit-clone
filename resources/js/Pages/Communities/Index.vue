@@ -2,7 +2,6 @@
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import Pagination from '@/Components/Pagination.vue';
-import {onMounted} from "vue";
 
 defineProps({
     communities: Object

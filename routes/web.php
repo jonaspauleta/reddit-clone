@@ -25,10 +25,12 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/r/{slug}', [CommunityController::class, 'show'])->name('community.show');
+
 Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::inertia('/dashboard', 'Dashboard')->name('dashboard');
 
-    Route::resource('/communities', CommunityController::class);
+    Route::resource('/dashboard/communities', CommunityController::class);
 
 });
 
