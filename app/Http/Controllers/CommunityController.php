@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CommunityStoreRequest;
+use App\Http\Resources\CommunityPostResource;
 use App\Models\Community;
 use Inertia\Inertia;
 
@@ -28,14 +29,19 @@ class CommunityController extends Controller {
     }
 
     public function show(String $slug): \Inertia\Response {
-        $community = Community::where('slug', $slug)->first();
+        $community = Community::where('slug', $slug)->firstOrFail();
+        $posts = CommunityPostResource::collection($community->posts()->with(['user', 'postVotes' => function ($query) {
+            $query->where('user_id', auth()->id());
+        }])->withCount('comments')->paginate(3));
+
 
         if ($community == null) {
             abort(404);
         }
 
         return Inertia::render('Communities/Show', [
-            'community' => $community
+            'community' => $community,
+            'posts' => $posts,
         ]);
     }
 
